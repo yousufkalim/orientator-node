@@ -48,12 +48,10 @@ exports.deleteUser = async (req, res) => {
 
 // Get One User By id
 exports.getAllUsersData = async (req, res) => {
-  console.log("get users");
   try {
     // Fetching User From DB
-    const users = await Users.find()
+    const users = await Users.find();
     if (!users) return res.status(404).send("User not Found");
-    console.log("88888888888",users.length);
 
     res.status(200).send({ msg: "Users Fetched", users });
   } catch (error) {
@@ -63,7 +61,6 @@ exports.getAllUsersData = async (req, res) => {
 };
 // Get One User By id
 exports.getAllUsersDataWithResult = async (req, res) => {
-  console.log("get users");
   try {
     // Fetching User From DB
     const users = await Users.aggregate([
@@ -97,7 +94,6 @@ exports.getAllUsersDataWithResult = async (req, res) => {
       },
     ]);
     if (!users) return res.status(404).send("User not Found");
-    console.log("88888888888",users);
 
     res.status(200).send({ msg: "Users Fetched", users });
   } catch (error) {

@@ -43,11 +43,11 @@ const resultSchema = new Schema(
     },
     desc_answers: [
       {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "Answer",
+        answer: { type: String },
+        question: { question: { type: String } },
       },
     ],
+
     courses: [courseSchema],
   },
   { timestamps: true }

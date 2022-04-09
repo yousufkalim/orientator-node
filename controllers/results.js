@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
     const domain = await Domains.findById(answer.domain); //Finding Domain name for result
     const desc_answers_in_db = await Answers.find({
       _id: { $in: disc_answers },
-    }); //Finding all discriminatory Answers In Db
+    }).populate("question"); //Finding all discriminatory Answers In Db
 
     // Fetching all courses in DB from job, domain and language filters
     let courses = await Courses.find({
@@ -238,6 +238,7 @@ exports.create = async (req, res) => {
       selectivityrating: item.selectivityrating ? item.selectivityrating : "",
       distancerating: item.distanceRatingIs,
     }));
+    console.log("desc_answers_in_db", desc_answers_in_db);
 
     const result = new Results({
       user: user_id,
@@ -245,7 +246,7 @@ exports.create = async (req, res) => {
       example_of_job: answer.job.example_of_job,
       type_of_job: answer.job.type_of_job,
       domain: domain.name,
-      desc_answers: disc_answers,
+      desc_answers: desc_answers_in_db,
       courses,
     });
     const savedResult = await result.save();
