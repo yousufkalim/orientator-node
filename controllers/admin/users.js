@@ -1,4 +1,6 @@
 const Users = require("../../models/users");
+const Answers = require("../../models/answers");
+const mongoose = require("mongoose");
 
 // Get All Users
 exports.getAllUsers = async (req, res) => {
@@ -92,10 +94,52 @@ exports.getAllUsersDataWithResult = async (req, res) => {
           preserveNullAndEmptyArrays: true,
         },
       },
+      {
+        $lookup: {
+          from: "answers",
+          localField: "userResult.desc_answers",
+          foreignField: "_id",
+          as: "userResult.desc_answers",
+        },
+      },
+      {
+        $lookup: {
+          from: "questions",
+          localField: "userResult.desc_answers.question",
+          foreignField: "_id",
+          as: "userResult.question",
+        },
+      },
     ]);
+
+    const ansUpdate = () => {
+      return new Promise((resolve, reject) => {
+        let updatedUsers = [];
+        let lastIndex = users.length - 1;
+        users.map(async (user, index) => {
+          Answers.findById(user.userResult.last_answer, (err, ans) => {
+            if (err) {
+            }
+
+            if (ans) {
+              user.userResult.last_answer = ans.answer;
+            }
+
+            updatedUsers.push(user);
+            if (index === lastIndex) {
+              resolve(updatedUsers);
+            }
+          });
+        });
+      });
+    };
+
+    let newusers = await ansUpdate();
+    console.log(newusers);
+
     if (!users) return res.status(404).send("User not Found");
 
-    res.status(200).send({ msg: "Users Fetched", users });
+    res.status(200).send({ msg: "Users Fetched", users: newusers });
   } catch (error) {
     console.log("Error ----> ", error);
     res.status(500).send("Something Failed");
