@@ -43,8 +43,9 @@ const resultSchema = new Schema(
     },
     desc_answers: [
       {
-        answer: { type: String },
-        question: { question: { type: String } },
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Answer",
       },
     ],
 

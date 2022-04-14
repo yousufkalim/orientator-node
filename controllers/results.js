@@ -242,11 +242,11 @@ exports.create = async (req, res) => {
 
     const result = new Results({
       user: user_id,
-      last_answer: answer.answer,
+      last_answer: last_answer,
       example_of_job: answer.job.example_of_job,
       type_of_job: answer.job.type_of_job,
       domain: domain.name,
-      desc_answers: desc_answers_in_db,
+      desc_answers: disc_answers,
       courses,
     });
     const savedResult = await result.save();

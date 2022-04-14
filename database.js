@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const db_url = process.env.MONGODB_URI;
 
 // Setting
-mongoose.set("debug", true);
+// mongoose.set("debug", true);
 
 // Connection
 mongoose
