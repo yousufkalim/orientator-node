@@ -62,6 +62,7 @@ const userSchema = new Schema(
       },
     },
     otp: { type: String },
+    smsOtp: { type: String },
     results: [
       {
         type: Schema.Types.ObjectId,
