@@ -39,7 +39,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "read-excel-file": "^5.2.8",
-    "twilio": "^3.71.2"
+    "twilio": "^6.1.0"
   },
   "devDependencies": {
     "husky": "^8.0.0",
